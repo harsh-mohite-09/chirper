@@ -1,40 +1,71 @@
 import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from './styles/theme';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import RootLayout from './components/rootLayout/RootLayout';
+import { PrivateRoute } from './components/auth/PrivatateRoute';
+import HomePage from './pages/HomePage';
+import ExplorePage from './pages/ExplorePage';
+import BookmarksPage from './pages/BookmarksPage';
+import LikedPage from './pages/LikedPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import PostDetailPage from './pages/PostDetailPage';
+import UserProfilePage from './pages/UserProfilePage';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/700.css';
+import ErrorPage from './pages/ErrorPage';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    errorElement: <ErrorPage />,
+    element: (
+      <PrivateRoute>
+        <RootLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: '/explore',
+        element: <ExplorePage />,
+      },
+      {
+        path: '/bookmarks',
+        element: <BookmarksPage />,
+      },
+      {
+        path: '/liked',
+        element: <LikedPage />,
+      },
+      {
+        path: '/post/:id',
+        element: <PostDetailPage />,
+      },
+      {
+        path: '/profile/:userId',
+        element: <UserProfilePage />,
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignupPage />,
+  },
+]);
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+      <RouterProvider router={router} />
     </ChakraProvider>
   );
 }
