@@ -1,25 +1,21 @@
-import { Flex, IconButton, Input } from '@chakra-ui/react';
+import { Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import React from 'react';
 import { FiSearch } from 'react-icons/fi';
 
 const Searchbar = () => {
   return (
-    <Flex alignItems="center" pos="relative">
-      <Input
-        type="text"
-        placeholder="Search users"
-        size="md"
-        borderRadius="full"
-      />
-      <IconButton
-        aria-label="Search"
-        icon={<FiSearch />}
-        colorScheme="teal"
-        size="sm"
-        borderRadius="full"
-        pos="absolute"
-        right="4px"
-      />
+    <Flex alignItems="center" flexBasis="20rem">
+      <InputGroup>
+        <Input
+          type="text"
+          placeholder="Search users"
+          size="md"
+          borderRadius="full"
+        />
+        <InputRightElement pointerEvents="none">
+          <FiSearch />
+        </InputRightElement>
+      </InputGroup>
     </Flex>
   );
 };

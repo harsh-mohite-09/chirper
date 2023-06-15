@@ -58,8 +58,6 @@ const SideBarRight = () => {
       p={2}
       pr={4}
     >
-      <Searchbar />
-
       <Box borderWidth="1px" borderRadius="md" p="2">
         <Text fontSize="xl" fontWeight="bold" mb="4" ml="4">
           Suggested Users
@@ -72,11 +70,11 @@ const SideBarRight = () => {
           p="2"
           css={{
             '&::-webkit-scrollbar': {
-              width: '4px',
+              width: '2px',
             },
             '&::-webkit-scrollbar-thumb': {
               backgroundColor: useColorModeValue('#cbd5e0', '#319795'),
-              borderRadius: '4px',
+              borderRadius: '2px',
             },
             '&::-webkit-scrollbar-track': {
               backgroundColor: 'transparent',

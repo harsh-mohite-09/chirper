@@ -15,6 +15,7 @@ const Header = () => {
   return (
     <Flex
       justifyContent={'space-between'}
+      gap="1rem"
       alignItems={'center'}
       px={{ base: 2, lg: 4 }}
       py={2}
@@ -27,9 +28,8 @@ const Header = () => {
           Chirper
         </Heading>
       </HStack>
-      <Box display={{ lg: 'none' }}>
-        <Searchbar />
-      </Box>
+
+      <Searchbar />
 
       <ColorModeSwitcher justifySelf="flex-end" />
     </Flex>

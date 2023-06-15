@@ -12,7 +12,7 @@ const RootLayout = () => {
   return (
     <Grid
       minH="100dvh"
-      templateColumns={{ base: 'auto 1fr', lg: '15rem 3fr 1fr' }}
+      templateColumns={{ base: 'auto 1fr', lg: '1fr 3fr 1fr' }}
       templateRows={{
         base: 'auto calc(100dvh - 56.8px - 82.4px) auto',
         lg: 'auto calc(100dvh - 56.8px)',
@@ -39,11 +39,11 @@ const RootLayout = () => {
         overflowY="scroll"
         css={{
           '&::-webkit-scrollbar': {
-            width: '4px',
+            width: '2px',
           },
           '&::-webkit-scrollbar-thumb': {
             backgroundColor: useColorModeValue('#cbd5e0', '#319795'),
-            borderRadius: '4px',
+            borderRadius: '2px',
           },
           '&::-webkit-scrollbar-track': {
             backgroundColor: 'transparent',
