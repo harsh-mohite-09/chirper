@@ -33,7 +33,7 @@ const PostModal = ({ isOpen, onClose }) => {
       <ModalContent w={{ base: '90vw' }}>
         <ModalHeader>New Post</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody p={4}>
           <Flex gap={2} h="10rem">
             <Box w="50px" h="50px">
               <Avatar />
@@ -42,6 +42,7 @@ const PostModal = ({ isOpen, onClose }) => {
               <Textarea
                 ref={initialRef}
                 h="full"
+                p={2}
                 outline="none"
                 border="none"
                 resize="none"

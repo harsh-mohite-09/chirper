@@ -11,7 +11,7 @@ const BookmarksPage = () => {
           </Heading>
         </Box>
         <Divider />
-        <Flex flexDir="column" alignItems="center" p={4}>
+        <Flex flexDir="column" alignItems="center" pb={4}>
           <Post />
           <Post />
           <Post />

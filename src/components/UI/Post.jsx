@@ -8,9 +8,14 @@ import {
   Flex,
   Heading,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spacer,
   Text,
 } from '@chakra-ui/react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import {
   faComment,
   faBookmark,
@@ -42,11 +47,19 @@ const Post = ({ isAuthUser }) => {
             </Flex>
             {isAuthUser && (
               <Flex>
-                <IconButton
-                  variant="ghost"
-                  borderRadius="full"
-                  icon={<FontAwesomeIcon icon={faEllipsisVertical} />}
-                />
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<FontAwesomeIcon icon={faEllipsisVertical} />}
+                    variant="ghost"
+                    borderRadius="full"
+                  />
+                  <MenuList minW="8rem">
+                    <MenuItem icon={<EditIcon />}>Edit</MenuItem>
+                    <MenuItem icon={<DeleteIcon />}>Delete</MenuItem>
+                  </MenuList>
+                </Menu>
               </Flex>
             )}
           </Flex>

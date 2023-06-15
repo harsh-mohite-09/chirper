@@ -21,7 +21,7 @@ const Header = () => {
       borderBottom="1px"
       borderColor={useColorModeValue('gray.300', 'gray.700')}
     >
-      <HStack spacing={4} mr={4}>
+      <HStack spacing={4} ml={2}>
         <FontAwesomeIcon icon={faDove} size="xl" />
         <Heading fontSize={'1.5rem'} display={{ base: 'none', lg: 'block' }}>
           Chirper

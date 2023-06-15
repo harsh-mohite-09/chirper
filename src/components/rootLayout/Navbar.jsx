@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <Flex
       h="full"
-      p={4}
+      p={{ base: 2, lg: 4 }}
       flexDir={{ base: 'row', lg: 'column' }}
       borderRightWidth={{ base: '0', lg: '1px' }}
       borderTopWidth={{ base: '1px', lg: '0' }}
@@ -30,9 +30,11 @@ const Navbar = () => {
     >
       <Flex
         flexDir={{ base: 'row', lg: 'column' }}
-        gap={4}
-        fontSize={{ base: '1.5em', lg: '1.2rem' }}
+        gap={{ base: 2, lg: 4 }}
+        fontSize={{ base: '1.7em', lg: '1.2rem' }}
         alignItems={{ base: 'center', lg: 'stretch' }}
+        justifyContent={{ base: 'space-between', lg: 'flex-start' }}
+        flexGrow={1}
       >
         <ChakraLink
           as={NavLink}
@@ -164,9 +166,45 @@ const Navbar = () => {
           onClick={onOpen}
         />
         <PostModal isOpen={isOpen} onClose={onClose} />
+
+        <Flex
+          borderWidth="1px"
+          borderRadius="full"
+          mb={{ base: '0', lg: '4' }}
+          display={{ base: 'flex', lg: 'none' }}
+          order={3}
+        >
+          <ChakraLink
+            w="full"
+            as={Link}
+            to={`/profile/${'user_id'}`}
+            borderRadius="full"
+            p={2}
+            _activeLink={{
+              bg: useColorModeValue('gray.100', 'gray.700'),
+            }}
+            _hover={{
+              bg: useColorModeValue('gray.100', 'gray.700'),
+              textDecoration: 'none',
+            }}
+          >
+            <Flex gap={4} alignItems="center">
+              <Avatar name={`Harsh Mohite`} size={{ base: 'sm', lg: 'md' }} />
+              <Flex flexDir="column" display={{ base: 'none', lg: 'block' }}>
+                <Heading size="sm">Harsh Mohite</Heading>
+                <Text fontSize="sm">@harshmohite09</Text>
+              </Flex>
+            </Flex>
+          </ChakraLink>
+        </Flex>
       </Flex>
 
-      <Flex borderWidth="1px" borderRadius="full" mb={{ base: '0', lg: '4' }}>
+      <Flex
+        borderWidth="1px"
+        borderRadius="full"
+        mb={{ base: '0', lg: '4' }}
+        display={{ base: 'none', lg: 'flex' }}
+      >
         <ChakraLink
           w="full"
           as={Link}
@@ -182,8 +220,8 @@ const Navbar = () => {
           }}
         >
           <Flex gap={4} alignItems="center">
-            <Avatar name={`Harsh Mohite`} size={{ base: 'sm', lg: 'md' }} />
-            <Flex flexDir="column" display={{ base: 'none', lg: 'block' }}>
+            <Avatar name={`Harsh Mohite`} size="md" />
+            <Flex flexDir="column">
               <Heading size="sm">Harsh Mohite</Heading>
               <Text fontSize="sm">@harshmohite09</Text>
             </Flex>
