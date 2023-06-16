@@ -13,9 +13,11 @@ import {
 import { NavLink, Link } from 'react-router-dom';
 import { AddIcon } from '@chakra-ui/icons';
 import PostModal from '../UI/PostModal';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useSelector(store => store.auth);
 
   return (
     <Flex
@@ -177,7 +179,7 @@ const Navbar = () => {
           <ChakraLink
             w="full"
             as={Link}
-            to={`/profile/${'user_id'}`}
+            to={`/profile/${user?.username}`}
             borderRadius="full"
             p={2}
             _activeLink={{
@@ -208,7 +210,7 @@ const Navbar = () => {
         <ChakraLink
           w="full"
           as={Link}
-          to={`/profile/${'user_id'}`}
+          to={`/profile/${user?.username}`}
           borderRadius="full"
           p={2}
           _activeLink={{
@@ -220,10 +222,14 @@ const Navbar = () => {
           }}
         >
           <Flex gap={4} alignItems="center">
-            <Avatar name={`Harsh Mohite`} size="md" />
+            <Avatar
+              src={user.avatarUrl}
+              name={`${user.firstName} ${user.lastName}`}
+              size="md"
+            />
             <Flex flexDir="column">
-              <Heading size="sm">Harsh Mohite</Heading>
-              <Text fontSize="sm">@harshmohite09</Text>
+              <Heading size="sm">{`${user?.firstName} ${user?.lastName}`}</Heading>
+              <Text fontSize="sm">@{user?.username}</Text>
             </Flex>
           </Flex>
         </ChakraLink>

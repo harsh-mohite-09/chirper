@@ -1,10 +1,30 @@
-import { Box, Divider, Flex, Heading } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import NewPost from '../components/UI/NewPost';
 import Post from '../components/UI/Post';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from '../slices/postsSlice';
 const HomePage = () => {
-  return (
+  const { allPosts } = useSelector(store => store.posts);
+  const { user: authUser } = useSelector(store => store.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
+
+  const homePagePosts = allPosts.filter(
+    post =>
+      post.username === authUser.username ||
+      authUser.following.some(({ username }) => username === post.username)
+  );
+
+  return allPosts.length === 0 ? (
+    <Flex justifyContent="center" mt={5}>
+      <Spinner colorScheme="teal" size="xl" />
+    </Flex>
+  ) : (
     <>
       <Box h="full" p={2}>
         <Box p={2}>
@@ -15,10 +35,9 @@ const HomePage = () => {
         <Divider />
         <Flex flexDir="column" alignItems="center" pb={4}>
           <NewPost />
-          <Post isAuthUser />
-          <Post isAuthUser />
-          <Post isAuthUser />
-          <Post isAuthUser />
+          {homePagePosts.map(post => (
+            <Post post={post} key={post._id} />
+          ))}
         </Flex>
       </Box>
     </>
