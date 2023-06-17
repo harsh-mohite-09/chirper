@@ -26,8 +26,6 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
   const [userDetails, setUserDetails] = useState(user);
   const dispatch = useDispatch();
 
-  const { avatarUrl, bio, website, firstName, lastName } = userDetails;
-
   const submitProfileEdit = async e => {
     e.preventDefault();
     await dispatch(editUserDetails(userDetails));
@@ -52,11 +50,11 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
             <Flex flexDir="column" gap={2}>
               <Flex gap={5}>
                 <Avatar
-                  src={avatarUrl}
+                  src={userDetails?.avatarUrl}
                   alt="profile-image"
                   size="lg"
                   marginRight="2"
-                  name={`${firstName} ${lastName}}`}
+                  name={`${userDetails?.firstName} ${userDetails?.lastName}}`}
                 >
                   <AvatarBadge boxSize="1.5em" border="0">
                     <FormControl>
@@ -73,19 +71,22 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
                   </AvatarBadge>
                 </Avatar>
                 <Flex display="flex" flexDir="column" gap={2}>
-                  <Heading size="md">{`${userDetails.firstName} ${userDetails.lastName}`}</Heading>
-                  <Text>@{userDetails.username}</Text>
+                  <Heading size="md">{`${userDetails?.firstName} ${userDetails?.lastName}`}</Heading>
+                  <Text>@{userDetails?.username}</Text>
                 </Flex>
               </Flex>
 
               <FormControl>
                 <FormLabel>Bio</FormLabel>
-                <Input value={bio} onChange={e => inputHandler(e, 'bio')} />
+                <Input
+                  value={userDetails?.bio}
+                  onChange={e => inputHandler(e, 'bio')}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Website</FormLabel>
                 <Input
-                  value={website}
+                  value={userDetails?.website}
                   onChange={e => inputHandler(e, 'website')}
                 />
               </FormControl>

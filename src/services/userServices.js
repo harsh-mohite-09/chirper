@@ -1,13 +1,38 @@
 import axios from 'axios';
 
-export const getAllUsersFromServer = () => axios.get('/api/users');
+const getAllUsersFromServer = () => axios.get('/api/users');
 
-export const getUserFromServer = username =>
-  axios.get(`/api/users/${username}`);
+const getUserFromServer = username => axios.get(`/api/users/${username}`);
 
-export const editUserDetailsFromServer = userData =>
+const editUserDetailsFromServer = userData =>
   axios.post(
     `/api/users/edit`,
     { userData },
     { headers: { authorization: localStorage.getItem('token') } }
   );
+
+const followUserService = userId =>
+  axios.post(
+    `/api/users/follow/${userId}`,
+    {},
+    {
+      headers: { authorization: localStorage.getItem('token') },
+    }
+  );
+
+const unFollowUserService = userId =>
+  axios.post(
+    `/api/users/unfollow/${userId}`,
+    {},
+    {
+      headers: { authorization: localStorage.getItem('token') },
+    }
+  );
+
+export {
+  getAllUsersFromServer,
+  getUserFromServer,
+  editUserDetailsFromServer,
+  followUserService,
+  unFollowUserService,
+};

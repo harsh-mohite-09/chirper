@@ -14,18 +14,33 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import LogoutUser from '../auth/LogoutUser';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import EditProfileModal from './EditProfileModal';
+import { followUser, unfollowUser } from '../../slices/userSlice';
 
 const UserProfile = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user: authUser } = useSelector(store => store.auth);
+  const {
+    user: { username: currentUser },
+  } = useSelector(store => store.auth);
+  const { allUsers } = useSelector(store => store.user);
+  const dispatch = useDispatch();
 
-  const isAuthUser = authUser.username === user.username;
+  const authUser = allUsers.find(({ username }) => username === currentUser);
 
-  const isFollowed = authUser.following.some(
+  const isAuthUser = authUser?.username === user?.username;
+
+  const isFollowed = authUser?.following.some(
     ({ username }) => username === user.username
   );
+
+  const followHandler = () => {
+    if (isFollowed) {
+      dispatch(unfollowUser(user._id));
+    } else {
+      dispatch(followUser(user._id));
+    }
+  };
 
   return (
     <Flex mt={{ base: 0, lg: 4 }} p={2} w="full" maxW="600px">
@@ -64,7 +79,12 @@ const UserProfile = ({ user }) => {
                 </HStack>
               ) : (
                 <HStack>
-                  <Button>{isFollowed ? 'Unfollow' : 'Follow'}</Button>
+                  <Button
+                    onClick={followHandler}
+                    colorScheme={isFollowed ? 'red' : 'teal'}
+                  >
+                    {isFollowed ? 'Unfollow' : 'Follow'}
+                  </Button>
                 </HStack>
               )}
             </Flex>

@@ -1,7 +1,16 @@
 import React from 'react';
 import { Box, Divider, Flex, Heading } from '@chakra-ui/react';
 import Post from '../components/UI/Post';
+import { useSelector } from 'react-redux';
+
 const BookmarksPage = () => {
+  const { bookmarks } = useSelector(store => store.posts);
+  const { allPosts } = useSelector(store => store.posts);
+
+  const bookmarkedPosts = allPosts.filter(post =>
+    bookmarks.some(id => id === post._id)
+  );
+
   return (
     <>
       <Box h="full" p={2}>
@@ -12,10 +21,9 @@ const BookmarksPage = () => {
         </Box>
         <Divider />
         <Flex flexDir="column" alignItems="center" pb={4}>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          {bookmarkedPosts.map(post => (
+            <Post key={post._id} post={post} />
+          ))}
         </Flex>
       </Box>
     </>

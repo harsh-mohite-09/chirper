@@ -1,17 +1,11 @@
 import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Post from '../components/UI/Post';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllPosts } from '../slices/postsSlice';
+import { useSelector } from 'react-redux';
 
 const ExplorePage = () => {
   const { allPosts } = useSelector(store => store.posts);
   const { user: authUser } = useSelector(store => store.auth);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, [dispatch]);
 
   const allExplorePosts = allPosts.filter(
     post => post.username !== authUser.username

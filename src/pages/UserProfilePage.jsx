@@ -10,17 +10,16 @@ import UserProfile from '../components/user/UserProfile';
 
 const UserProfilePage = () => {
   const { username } = useParams('username');
-  const { user: authUser } = useSelector(store => store.auth);
   const { userDetails: user, userDetailsStatus } = useSelector(
     store => store.user
   );
-  const { userPosts: posts } = useSelector(store => store.posts);
+  const { allPosts, userPosts } = useSelector(store => store.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser(username));
     dispatch(getUserPosts(username));
-  }, [username, dispatch]);
+  }, [username, allPosts, dispatch]);
 
   return userDetailsStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
@@ -28,10 +27,8 @@ const UserProfilePage = () => {
     </Flex>
   ) : (
     <Flex p={2} flexDir="column" alignItems="center">
-      <UserProfile
-        user={user.username === authUser.username ? authUser : user}
-      />
-      {posts?.map(post => (
+      <UserProfile user={user} />
+      {userPosts?.map(post => (
         <Post user={user} post={post} key={post._id} />
       ))}
     </Flex>

@@ -17,6 +17,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
 import { getAllUsers } from './slices/userSlice';
 import { useDispatch } from 'react-redux';
+import { getAllPosts } from './slices/postsSlice';
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllUsers());
+    dispatch(getAllPosts());
   }, [dispatch]);
 
   return (
