@@ -92,7 +92,7 @@ const UserProfile = ({ user }) => {
         </Flex>
         <Flex>{user?.bio}</Flex>
         <Flex>
-          <Link href={user.website} target="_blank">
+          <Link href={user?.website} target="_blank">
             {user?.website}
           </Link>
         </Flex>

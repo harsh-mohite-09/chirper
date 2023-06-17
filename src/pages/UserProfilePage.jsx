@@ -5,21 +5,20 @@ import Post from '../components/UI/Post';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../slices/userSlice';
-import { getUserPosts } from '../slices/postsSlice';
 import UserProfile from '../components/user/UserProfile';
 
 const UserProfilePage = () => {
   const { username } = useParams('username');
-  const { userDetails: user, userDetailsStatus } = useSelector(
-    store => store.user
-  );
-  const { allPosts, userPosts } = useSelector(store => store.posts);
+  const { allUsers, userDetailsStatus } = useSelector(store => store.user);
+  const { allPosts } = useSelector(store => store.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser(username));
-    dispatch(getUserPosts(username));
-  }, [username, allPosts, dispatch]);
+  }, [username, dispatch]);
+
+  const userPosts = allPosts.filter(post => post.username === username);
+  const user = allUsers.find(user => user.username === username);
 
   return userDetailsStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
