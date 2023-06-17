@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -11,15 +11,14 @@ import {
   Link as ChakraLink,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import { useAuthContext } from '../context/authContext';
-import { useDataContext } from '../context/dataContext';
-import { signupUser } from '../services/authServices';
+import { signupUser } from '../slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignupPage = () => {
-  const { token, setToken, setUser } = useAuthContext();
-  const { setLoader } = useDataContext();
-  const location = useLocation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loading = useSelector(store => store.auth.loading);
+  const token = useSelector(store => store.auth.token);
   // const [showPassword, setShowPassword] = useState(false);
   // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userConfig, setUserConfig] = useState({
@@ -46,15 +45,7 @@ const SignupPage = () => {
 
   const formSubmitHandler = async e => {
     e.preventDefault();
-    signupUser(
-      setLoader,
-      setToken,
-      setUser,
-      location,
-      navigate,
-      userConfig,
-      setUserConfig
-    );
+    dispatch(signupUser(userConfig));
   };
 
   return (

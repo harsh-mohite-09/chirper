@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './styles/theme';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -12,9 +12,12 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import PostDetailPage from './pages/PostDetailPage';
 import UserProfilePage from './pages/UserProfilePage';
+import ErrorPage from './pages/ErrorPage';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
-import ErrorPage from './pages/ErrorPage';
+import { getAllUsers } from './slices/userSlice';
+import { useDispatch } from 'react-redux';
+import { getAllPosts } from './slices/postsSlice';
 
 const router = createBrowserRouter([
   {
@@ -47,7 +50,7 @@ const router = createBrowserRouter([
         element: <PostDetailPage />,
       },
       {
-        path: '/profile/:userId',
+        path: '/profile/:username',
         element: <UserProfilePage />,
       },
     ],
@@ -63,6 +66,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllPosts());
+  }, [dispatch]);
+
   return (
     <ChakraProvider theme={theme}>
       <RouterProvider router={router} />

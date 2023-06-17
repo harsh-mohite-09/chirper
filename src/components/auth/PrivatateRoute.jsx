@@ -1,8 +1,8 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuthContext } from '../../context/authContext';
+import { useSelector } from 'react-redux';
 
 function PrivateRoute({ children }) {
-  const { token } = useAuthContext();
+  const { token } = useSelector(store => store.auth);
   const location = useLocation();
   return token ? (
     children

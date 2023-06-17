@@ -2,16 +2,13 @@ import React from 'react';
 import { IconButton } from '@chakra-ui/react';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { logoutUser } from '../../services/authServices';
-import { useAuthContext } from '../../context/authContext';
-import { useDataContext } from '../../context/dataContext';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../slices/authSlice';
 
 const LogoutUser = () => {
-  const { setToken, setUser } = useAuthContext();
-  const { setLoader } = useDataContext();
-
+  const dispatch = useDispatch();
   const logoutHandler = () => {
-    logoutUser(setToken, setUser, setLoader);
+    dispatch(logoutUser());
   };
 
   return (

@@ -14,8 +14,11 @@ import {
 import { faFaceSmile, faImage } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const NewPost = () => {
+  const { user: authUser } = useSelector(store => store.auth);
+
   return (
     <Card
       borderTop="8px"
@@ -29,7 +32,7 @@ const NewPost = () => {
       <CardBody py={4} px={4}>
         <Flex gap={2}>
           <Box w="50px" h="50px">
-            <Avatar />
+            <Avatar src={authUser.avatarUrl} />
           </Box>
           <Box flexGrow={1}>
             <Textarea

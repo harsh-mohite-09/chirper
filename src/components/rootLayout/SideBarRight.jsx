@@ -1,50 +1,24 @@
 import React from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  Button,
-  Avatar,
-  useColorModeValue,
-} from '@chakra-ui/react';
-
-import Searchbar from './Searchbar';
-
-const suggestedUsers = [
-  {
-    id: 1,
-    name: 'John Doe',
-    username: 'johndoe23',
-    avatar: 'https://example.com/avatar1.png',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    username: 'janesmith45',
-    avatar: 'https://example.com/avatar1.png',
-  },
-  {
-    id: 3,
-    name: 'Jane Smith',
-    username: 'janesmith45',
-    avatar: 'https://example.com/avatar1.png',
-  },
-  {
-    id: 4,
-    name: 'Jane Smith',
-    username: 'janesmith45',
-    avatar: 'https://example.com/avatar1.png',
-  },
-  {
-    id: 5,
-    name: 'Jane Smith',
-    username: 'janesmith45',
-    avatar: 'https://example.com/avatar1.png',
-  },
-  // Add more user data as needed
-];
+import { Box, Flex, Text, useColorModeValue, Spinner } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import SideBarUser from './SideBarUser';
 
 const SideBarRight = () => {
+  const { allUsers, allUsersStatus } = useSelector(store => store.user);
+  const {
+    user: { username: currentUser },
+  } = useSelector(store => store.auth);
+
+  const authUser = allUsers.find(({ username }) => username === currentUser);
+
+  const userList = allUsers.filter(
+    ({ username }) =>
+      username !== authUser.username &&
+      !authUser.following.some(item => item.username === username)
+  );
+
+  const colorModeValue = useColorModeValue('#cbd5e0', '#319795');
+
   return (
     <Flex
       borderLeft="1px"
@@ -62,42 +36,35 @@ const SideBarRight = () => {
         <Text fontSize="xl" fontWeight="bold" mb="4" ml="4">
           Suggested Users
         </Text>
-        <Flex
-          flexDir="column"
-          gap="4"
-          maxH="16rem"
-          overflowY="scroll"
-          p="2"
-          css={{
-            '&::-webkit-scrollbar': {
-              width: '2px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: useColorModeValue('#cbd5e0', '#319795'),
-              borderRadius: '2px',
-            },
-            '&::-webkit-scrollbar-track': {
-              backgroundColor: 'transparent',
-            },
-          }}
-        >
-          {suggestedUsers.map(user => (
-            <Flex key={user.id} align="center" mb="2">
-              <Avatar src={user.avatar} mr="2" name={user.name} />
-
-              <Flex flexDir="column">
-                <Text size="lg" fontWeight={700}>
-                  {user.name}
-                </Text>
-                <Text fontSize="sm">@{user.username}</Text>
-              </Flex>
-
-              <Button ml="auto" colorScheme="teal" size="sm">
-                Follow
-              </Button>
-            </Flex>
-          ))}
-        </Flex>
+        {allUsersStatus === 'pending' ? (
+          <Flex justifyContent="center" mt={5}>
+            <Spinner colorScheme="teal" size="lg" />
+          </Flex>
+        ) : (
+          <Flex
+            flexDir="column"
+            gap="4"
+            maxH="16rem"
+            overflowY="scroll"
+            p="2"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '2px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: colorModeValue,
+                borderRadius: '2px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'transparent',
+              },
+            }}
+          >
+            {userList.map(user => (
+              <SideBarUser key={user._id} user={user} />
+            ))}
+          </Flex>
+        )}
       </Box>
     </Flex>
   );

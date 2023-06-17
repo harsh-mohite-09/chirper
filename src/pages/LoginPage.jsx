@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -12,9 +12,8 @@ import {
   Link as ChakraLink,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import { useAuthContext } from '../context/authContext';
-import { useDataContext } from '../context/dataContext';
-import { loginUser } from '../services/authServices';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../slices/authSlice';
 
 const testUserConfig = {
   username: 'harshmohite09',
@@ -22,10 +21,9 @@ const testUserConfig = {
 };
 
 const LoginPage = () => {
-  const { setToken, setUser } = useAuthContext();
-  const { setLoader } = useDataContext();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const loading = useSelector(store => store.auth.loading);
 
   const [userConfig, setUserConfig] = useState({
     username: '',
@@ -39,18 +37,20 @@ const LoginPage = () => {
     }));
   };
 
-  const formSubmitHandler = e => {
+  const formSubmitHandler = async e => {
     e.preventDefault();
-    loginUser(setLoader, setToken, setUser, location, navigate, userConfig);
+    await dispatch(loginUser(userConfig));
+    navigate('/');
     setUserConfig({
       username: '',
       password: '',
     });
   };
 
-  const guestLoginHandler = e => {
+  const guestLoginHandler = async e => {
     e.preventDefault();
-    loginUser(setLoader, setToken, setUser, location, navigate, testUserConfig);
+    await dispatch(loginUser(testUserConfig));
+    navigate('/');
     setUserConfig(testUserConfig);
   };
 

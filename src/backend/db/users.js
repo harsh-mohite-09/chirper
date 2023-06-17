@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import { formatDate } from '../utils/authUtils';
 /**
  * User Database can be added here.
@@ -7,7 +6,7 @@ import { formatDate } from '../utils/authUtils';
 
 export const users = [
   {
-    _id: uuid(),
+    _id: '74Zgsh9ixl',
     firstName: 'Harsh',
     lastName: 'Mohite',
     username: 'harshmohite09',
@@ -16,6 +15,7 @@ export const users = [
     bookmarks: [],
     avatarUrl:
       'https://res.cloudinary.com/dbiyvbal5/image/upload/v1684241445/cld-sample.jpg',
+    website: 'https://linktr.ee/harshm_09',
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
