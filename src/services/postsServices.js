@@ -39,3 +39,26 @@ export const dislikePostService = postId =>
     {},
     { headers: { authorization: localStorage.getItem('token') } }
   );
+
+export const addPostService = postData =>
+  axios.post(
+    '/api/posts',
+    { postData },
+    {
+      headers: { authorization: localStorage.getItem('token') },
+    }
+  );
+
+export const deletePostService = async postId =>
+  axios.delete(`/api/posts/${postId}`, {
+    headers: { authorization: localStorage.getItem('token') },
+  });
+
+export const editPostService = postData =>
+  axios.post(
+    `/api/posts/edit/${postData._id}`,
+    { postData },
+    {
+      headers: { authorization: localStorage.getItem('token') },
+    }
+  );

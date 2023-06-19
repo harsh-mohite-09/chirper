@@ -15,6 +15,7 @@ import {
   MenuList,
   Spacer,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -30,17 +31,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addBookmark,
+  deletePost,
   dislikePost,
   likePost,
   removeBookmark,
 } from '../../slices/postsSlice';
 import { Link } from 'react-router-dom';
+import PostModal from './PostModal';
 
 const Post = ({ post }) => {
   const { allUsers: users } = useSelector(store => store.user);
   const { user: authUser } = useSelector(store => store.auth);
   const { bookmarks } = useSelector(store => store.posts);
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const user = users.find(user => user?.username === post?.username);
 
@@ -66,8 +70,12 @@ const Post = ({ post }) => {
     }
   };
 
+  const deletePostHandler = postId => {
+    dispatch(deletePost(postId));
+  };
+
   return (
-    <Card w="full" maxW="600px" mt={4} boxShadow="0 0 10px 0 rgba(0,0,0,0.15)">
+    <Card w="full" maxW="600px" mb={4} boxShadow="0 0 10px 0 rgba(0,0,0,0.15)">
       <CardBody py={4} px={4}>
         <Flex gap={2}>
           <Link to={`/profile/${post.username}`}>
@@ -105,8 +113,20 @@ const Post = ({ post }) => {
                     borderRadius="full"
                   />
                   <MenuList minW="8rem">
-                    <MenuItem icon={<EditIcon />}>Edit</MenuItem>
-                    <MenuItem icon={<DeleteIcon />}>Delete</MenuItem>
+                    <MenuItem icon={<EditIcon />} onClick={onOpen}>
+                      Edit
+                    </MenuItem>
+                    <PostModal
+                      isOpen={isOpen}
+                      onClose={onClose}
+                      postDetails={post}
+                    />
+                    <MenuItem
+                      icon={<DeleteIcon />}
+                      onClick={() => deletePostHandler(post?._id)}
+                    >
+                      Delete
+                    </MenuItem>
                   </MenuList>
                 </Menu>
               </Flex>
@@ -115,7 +135,7 @@ const Post = ({ post }) => {
         </Flex>
         <Flex flexDir="column" gap={4} mt={4}>
           <Text>{post?.content}</Text>
-          <Image src={post?.mediaURL} />
+          {post?.mediaURL && <Image src={post?.mediaURL} />}
         </Flex>
       </CardBody>
 

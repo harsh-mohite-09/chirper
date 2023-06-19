@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  addPostService,
   bookmarkPostService,
+  deletePostService,
   dislikePostService,
+  editPostService,
   getAllPostsFromServer,
   getAllUserPostsFromServer,
   getBookmarksService,
@@ -107,6 +110,42 @@ export const dislikePost = createAsyncThunk(
   }
 );
 
+export const addPost = createAsyncThunk(
+  'posts/addPost',
+  async (postData, { rejectWithValue }) => {
+    try {
+      const { data } = await addPostService(postData);
+      return data.posts;
+    } catch (e) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const deletePost = createAsyncThunk(
+  'posts/deletePost',
+  async (postId, { rejectWithValue }) => {
+    try {
+      const { data } = await deletePostService(postId);
+      return data.posts;
+    } catch (e) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
+
+export const editPost = createAsyncThunk(
+  'posts/editPost',
+  async (postData, { rejectWithValue }) => {
+    try {
+      const { data } = await editPostService(postData);
+      return data.posts;
+    } catch (e) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -175,6 +214,27 @@ const postsSlice = createSlice({
         toast.success('Disliked Post', TOAST_CONFIG);
       })
       .addCase(dislikePost.rejected, (state, action) => {
+        state.allPostsError = action.payload;
+      })
+      .addCase(addPost.fulfilled, (state, action) => {
+        state.allPosts = action.payload;
+        toast.success('Created Post!', TOAST_CONFIG);
+      })
+      .addCase(addPost.rejected, (state, action) => {
+        state.allPostsError = action.payload;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.allPosts = action.payload;
+        toast.error('Deleted Post!', TOAST_CONFIG);
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.allPostsError = action.payload;
+      })
+      .addCase(editPost.fulfilled, (state, action) => {
+        state.allPosts = action.payload;
+        toast.success('Updated Post!', TOAST_CONFIG);
+      })
+      .addCase(editPost.rejected, (state, action) => {
         state.allPostsError = action.payload;
       });
   },
