@@ -3,6 +3,7 @@ import { loginService, signUpService } from '../services/authServices';
 import { toast } from 'react-toastify';
 import { TOAST_CONFIG } from '../utils/constants';
 import { editUserDetailsFromServer } from '../services/userServices';
+import { getAllUsers } from './userSlice';
 
 const initialState = {
   token: localStorage.getItem('token') || null,
@@ -38,12 +39,13 @@ export const signupUser = createAsyncThunk(
 
 export const editUserDetails = createAsyncThunk(
   'auth/editUserDetails',
-  async (userDetails, { rejectWithValue }) => {
+  async (userDetails, thunkApi) => {
     try {
       const { data } = await editUserDetailsFromServer(userDetails);
+      thunkApi.dispatch(getAllUsers());
       return data.user;
     } catch (e) {
-      return rejectWithValue(e.message);
+      return thunkApi.rejectWithValue(e.message);
     }
   }
 );

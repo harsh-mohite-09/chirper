@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { followUser } from '../../slices/userSlice';
 
-const SideBarUser = ({ user }) => {
+const SideBarUser = ({ user, isSearchUser }) => {
   const dispatch = useDispatch();
 
   const followHandler = () => {
@@ -20,19 +20,20 @@ const SideBarUser = ({ user }) => {
           name={`${user.firstName} ${user.lastName}`}
         />
       </Link>
-
-      <Link to={`/profile/${user.username}`}>
-        <Flex flexDir="column">
+      <Flex flexDir="column" flexGrow={isSearchUser ? 1 : 0}>
+        <Link to={`/profile/${user.username}`}>
           <Text size="lg" fontWeight={700}>
             {`${user.firstName} ${user.lastName}`}
           </Text>
           <Text fontSize="sm">@{user.username}</Text>
-        </Flex>
-      </Link>
+        </Link>
+      </Flex>
 
-      <Button ml="auto" colorScheme="teal" size="sm" onClick={followHandler}>
-        Follow
-      </Button>
+      {!isSearchUser && (
+        <Button ml="auto" colorScheme="teal" size="sm" onClick={followHandler}>
+          Follow
+        </Button>
+      )}
     </Flex>
   );
 };

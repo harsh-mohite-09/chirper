@@ -1,6 +1,6 @@
 import {
   Avatar,
-  AvatarBadge,
+  Box,
   Button,
   Flex,
   FormControl,
@@ -16,16 +16,14 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editUserDetails } from '../../slices/authSlice';
+import UserEditMenu from '../UI/UserEditMenu';
 
 const EditProfileModal = ({ isOpen, onClose, user }) => {
   const [userDetails, setUserDetails] = useState(user);
   const dispatch = useDispatch();
-
   const submitProfileEdit = async e => {
     e.preventDefault();
     await dispatch(editUserDetails(userDetails));
@@ -39,6 +37,16 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
     }));
   };
 
+  const handleImageSelect = e => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setUserDetails(prev => ({ ...prev, avatarUrl: imageUrl }));
+  };
+
+  const handleAvatarSelect = e => {
+    setUserDetails(prev => ({ ...prev, avatarUrl: e.target.src }));
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="sm" m="2">
       <ModalOverlay />
@@ -49,27 +57,20 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
           <ModalBody justifyContent="space-between">
             <Flex flexDir="column" gap={2}>
               <Flex gap={5}>
-                <Avatar
-                  src={userDetails?.avatarUrl}
-                  alt="profile-image"
-                  size="lg"
-                  marginRight="2"
-                  name={`${userDetails?.firstName} ${userDetails?.lastName}}`}
-                >
-                  <AvatarBadge boxSize="1.5em" border="0">
-                    <FormControl>
-                      <FormLabel
-                        cursor="pointer"
-                        position="absolute"
-                        right="-10px"
-                        bottom="0"
-                      >
-                        <FontAwesomeIcon icon={faCamera} />
-                      </FormLabel>
-                      <Input type="file" visibility="hidden" accept="image/*" />
-                    </FormControl>
-                  </AvatarBadge>
-                </Avatar>
+                <Flex pos="relative">
+                  <Avatar
+                    src={userDetails?.avatarUrl}
+                    alt="profile-image"
+                    size="lg"
+                    marginRight="2"
+                  />
+                  <Box pos="absolute" right={-3} bottom={-3}>
+                    <UserEditMenu
+                      handleAvatarSelect={handleAvatarSelect}
+                      handleImageSelect={handleImageSelect}
+                    />
+                  </Box>
+                </Flex>
                 <Flex display="flex" flexDir="column" gap={2}>
                   <Heading size="md">{`${userDetails?.firstName} ${userDetails?.lastName}`}</Heading>
                   <Text>@{userDetails?.username}</Text>

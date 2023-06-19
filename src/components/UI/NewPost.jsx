@@ -7,17 +7,45 @@ import {
   CardFooter,
   Divider,
   Flex,
-  IconButton,
+  FormControl,
+  FormLabel,
+  Input,
   Spacer,
   Textarea,
 } from '@chakra-ui/react';
 import { faFaceSmile, faImage } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from '../../slices/postsSlice';
+
+const initialPostData = {
+  content: '',
+  mediaURL: '',
+};
 
 const NewPost = () => {
   const { user: authUser } = useSelector(store => store.auth);
+  const [postData, setPostData] = useState(initialPostData);
+  // const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const dispatch = useDispatch();
+
+  const btnIsDisabled = postData.content.trim().length === 0;
+
+  const createPostHandler = () => {
+    dispatch(addPost(postData));
+    setPostData(initialPostData);
+  };
+
+  const inputHandler = e => {
+    setPostData(prev => ({ ...prev, content: e.target.value }));
+  };
+
+  const handleImageSelect = e => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setPostData(prev => ({ ...prev, mediaURL: imageUrl }));
+  };
 
   return (
     <Card
@@ -41,6 +69,8 @@ const NewPost = () => {
               resize="none"
               focusBorderColor="transparent"
               placeholder="What is happening?"
+              value={postData.content}
+              onChange={inputHandler}
             />
           </Box>
         </Flex>
@@ -50,20 +80,28 @@ const NewPost = () => {
 
       <CardFooter p={2}>
         <Flex w="full">
-          <Box>
-            <IconButton
-              borderRadius="full"
-              icon={<FontAwesomeIcon icon={faImage} />}
-              bg="transparent"
-            />
-            <IconButton
-              borderRadius="full"
-              icon={<FontAwesomeIcon icon={faFaceSmile} />}
-              bg="transparent"
-            />
-          </Box>
+          <Flex alignItems="center" ml={2}>
+            <FormControl display="flex" alignItems="center" width="1rem">
+              <FormLabel m={0} cursor="pointer">
+                <FontAwesomeIcon icon={faImage} />
+              </FormLabel>
+              <Input
+                type="file"
+                visibility="hidden"
+                accept="image/*, video/*"
+                onChange={handleImageSelect}
+              />
+            </FormControl>
+          </Flex>
           <Spacer />
-          <Button colorScheme="teal">Post</Button>
+          <Button
+            colorScheme="teal"
+            borderRadius="full"
+            onClick={createPostHandler}
+            isDisabled={btnIsDisabled}
+          >
+            Post
+          </Button>
         </Flex>
       </CardFooter>
     </Card>
