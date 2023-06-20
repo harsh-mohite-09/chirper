@@ -1,17 +1,24 @@
 import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Post from '../components/UI/Post';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from '../slices/postsSlice';
 
 const ExplorePage = () => {
-  const { allPosts } = useSelector(store => store.posts);
+  const { allPosts, allPostsStatus } = useSelector(store => store.posts);
   const { user: authUser } = useSelector(store => store.auth);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
 
   const allExplorePosts = allPosts.filter(
     post => post.username !== authUser.username
   );
 
-  return allPosts.length === 0 ? (
+  return allPostsStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
     </Flex>

@@ -34,7 +34,7 @@ const Searchbar = () => {
   const authUser = allUsers?.find(({ username }) => username === currentUser);
 
   const userList = allUsers?.filter(
-    ({ username }) => username !== authUser.username
+    ({ username }) => username !== authUser?.username
   );
 
   const searchSuggestionList = getSearchSuggestions(userList, searchText);

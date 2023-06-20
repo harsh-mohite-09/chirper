@@ -13,8 +13,8 @@ const SideBarRight = () => {
 
   const userList = allUsers?.filter(
     ({ username }) =>
-      username !== authUser.username &&
-      !authUser.following.some(item => item.username === username)
+      username !== authUser?.username &&
+      !authUser?.following.some(item => item.username === username)
   );
 
   const colorModeValue = useColorModeValue('#cbd5e0', '#319795');
