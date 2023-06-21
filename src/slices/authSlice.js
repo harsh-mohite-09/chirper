@@ -104,7 +104,6 @@ const authSlice = createSlice({
       })
       .addCase(editUserDetails.fulfilled, (state, action) => {
         state.user = action.payload;
-        localStorage.setItem('user', JSON.stringify(state.user));
         toast.success(`Profile Updated`, TOAST_CONFIG);
       })
       .addCase(editUserDetails.rejected, (state, action) => {
