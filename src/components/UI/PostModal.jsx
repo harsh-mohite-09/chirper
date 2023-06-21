@@ -6,7 +6,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  IconButton,
   Image,
   Input,
   Modal,
@@ -16,22 +15,15 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
   Spacer,
   Textarea,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFaceSmile, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost, editPost } from '../../slices/postsSlice';
-// import EmojiPicker from 'emoji-picker-react';
+import EmojiPopover from './EmojiPopover';
 
 const initialPostData = {
   content: '',
@@ -42,7 +34,6 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
   const initialRef = useRef();
   const { user: authUser } = useSelector(store => store.auth);
   const [postData, setPostData] = useState(postDetails || initialPostData);
-  // const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const dispatch = useDispatch();
 
   const btnIsDisabled = postData.content.trim().length === 0;
@@ -71,11 +62,9 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
     setPostData(prev => ({ ...prev, mediaURL: '' }));
   };
 
-  // const colorModeValue = useColorModeValue('light', 'dark');
-
-  // const previewConfig = {
-  //   showPreview: false,
-  // };
+  const handleEmojiClick = e => {
+    setPostData(prev => ({ ...prev, content: prev.content + e.emoji }));
+  };
 
   return (
     <Modal
@@ -123,7 +112,7 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
         <Divider borderColor="gray.500" />
         <ModalFooter p={2}>
           <Flex w="full">
-            <Flex alignItems="center" ml={2}>
+            <Flex alignItems="center" ml={2} gap={2}>
               <FormControl display="flex" alignItems="center" width="1rem">
                 <FormLabel m={0} cursor="pointer">
                   <FontAwesomeIcon icon={faImage} />
@@ -135,35 +124,7 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
                   onChange={handleImageSelect}
                 />
               </FormControl>
-
-              {/* <Popover>
-                <PopoverTrigger>
-                  <IconButton
-                    icon={<FontAwesomeIcon icon={faFaceSmile} />}
-                    variant="ghost"
-                    borderRadius="full"
-                    onClick={() => setShowEmojiPicker(true)}
-                  />
-                </PopoverTrigger>
-                <PopoverContent p={0}>
-                  <PopoverArrow />
-                  <PopoverCloseButton
-                    onClick={() => setShowEmojiPicker(false)}
-                  />
-                  <PopoverBody p={0}>
-                    {showEmojiPicker && (
-                      <EmojiPicker
-                        theme={colorModeValue}
-                        searchDisabled
-                        lazyLoadEmojis
-                        skinTonesDisabled
-                        previewConfig={previewConfig}
-                        height="250px"
-                      />
-                    )}
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover> */}
+              <EmojiPopover onEmojiClick={handleEmojiClick} />
             </Flex>
             <Spacer />
             <Button

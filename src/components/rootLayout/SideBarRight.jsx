@@ -17,8 +17,6 @@ const SideBarRight = () => {
       !authUser?.following.some(item => item.username === username)
   );
 
-  const colorModeValue = useColorModeValue('#cbd5e0', '#319795');
-
   return (
     <Flex
       borderLeft="1px"
@@ -41,25 +39,7 @@ const SideBarRight = () => {
             <Spinner colorScheme="teal" size="lg" />
           </Flex>
         ) : (
-          <Flex
-            flexDir="column"
-            gap="4"
-            maxH="16rem"
-            overflowY="scroll"
-            p="2"
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '2px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: colorModeValue,
-                borderRadius: '2px',
-              },
-              '&::-webkit-scrollbar-track': {
-                backgroundColor: 'transparent',
-              },
-            }}
-          >
+          <Flex flexDir="column" gap="4" maxH="16rem" overflowY="scroll" p="2">
             {userList.map(user => (
               <SideBarUser key={user._id} user={user} />
             ))}
