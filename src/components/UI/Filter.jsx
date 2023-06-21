@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { sortOptions } from '../../utils/helpers';
 import React, { useRef } from 'react';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faSliders } from '@fortawesome/free-solid-svg-icons';
 
 const Filter = ({ sortBy, setSortBy }) => {
   const initialRef = useRef();
@@ -25,11 +25,11 @@ const Filter = ({ sortBy, setSortBy }) => {
       <Heading size="md" ml={2}>
         {sortOptions[sortBy]}
       </Heading>
-      <Menu maxW="8rem" initialFocusRef={initialRef}>
-        <MenuButton as={Button}>
-          <FontAwesomeIcon icon={faFilter} />
+      <Menu initialFocusRef={initialRef}>
+        <MenuButton as={Button} variant="ghost" borderRadius="full">
+          <FontAwesomeIcon icon={faSliders} size="lg" />
         </MenuButton>
-        <MenuList>
+        <MenuList minW="8rem">
           {Object.keys(sortOptions).map(currentSort => (
             <MenuItem
               key={currentSort}
