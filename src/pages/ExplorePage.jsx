@@ -23,21 +23,19 @@ const ExplorePage = () => {
       <Spinner colorScheme="teal" size="xl" />
     </Flex>
   ) : (
-    <>
-      <Box h="full" p={2}>
-        <Box p={2}>
-          <Heading textAlign="center" fontSize={{ base: 'xl', lg: '2xl' }}>
-            Explore
-          </Heading>
-        </Box>
-        <Divider />
-        <Flex flexDir="column" alignItems="center" pb={4}>
-          {allExplorePosts.map(post => (
-            <Post post={post} key={post._id} />
-          ))}
-        </Flex>
+    <Box h="full" px={2}>
+      <Box p={2}>
+        <Heading textAlign="center" fontSize={{ base: 'xl', lg: '2xl' }}>
+          Explore
+        </Heading>
       </Box>
-    </>
+      <Divider />
+      <Flex flexDir="column" alignItems="center" mt={4} pb={4}>
+        {allExplorePosts.map(post => (
+          <Post post={post} key={post._id} />
+        ))}
+      </Flex>
+    </Box>
   );
 };
 

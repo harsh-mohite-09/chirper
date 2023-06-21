@@ -25,7 +25,7 @@ const RootLayout = () => {
       minH="100dvh"
       templateColumns={{ base: 'auto 1fr', lg: '1fr 3fr 1fr' }}
       templateRows={{
-        base: 'auto calc(100dvh - 56.8px - 82.4px) auto',
+        base: 'auto calc(100dvh - 56.8px - 68.1px) auto',
         lg: 'auto calc(100dvh - 56.8px)',
       }}
       templateAreas={{

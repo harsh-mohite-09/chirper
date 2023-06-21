@@ -1,33 +1,18 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spinner,
-} from '@chakra-ui/react';
-
-import React from 'react';
-import NewPost from '../components/UI/NewPost';
-import Post from '../components/UI/Post';
+import { Box, Divider, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { getSortedPosts, sortOptions } from '../utils/helpers';
-import { useEffect } from 'react';
+import { getSortedPosts } from '../utils/helpers';
 import { getAllPosts } from '../slices/postsSlice';
+import Post from '../components/UI/Post';
+import NewPost from '../components/UI/NewPost';
+import Filter from '../components/UI/Filter';
 
 const HomePage = () => {
+  const [sortBy, setSortBy] = useState('Latest');
   const { user: authUser } = useSelector(store => store.auth);
   const { allUsers } = useSelector(store => store.user);
   const { allPosts, allPostsStatus } = useSelector(store => store.posts);
   const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState('Latest');
 
   useEffect(() => {
     dispatch(getAllPosts());
@@ -48,43 +33,29 @@ const HomePage = () => {
       <Spinner colorScheme="teal" size="xl" />
     </Flex>
   ) : (
-    <>
-      <Box h="full" p={2}>
-        <Box p={2}>
-          <Heading textAlign="center" fontSize={{ base: 'xl', lg: '2xl' }}>
-            Home
-          </Heading>
-        </Box>
-        <Divider />
-        <Flex flexDir="column" alignItems="center" pb={4}>
-          <NewPost />
-          <Flex
-            w="full"
-            maxW="600px"
-            py={2}
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Heading size="md">{sortOptions[sortBy]}</Heading>
-            <Menu maxW="8rem">
-              <MenuButton as={Button}>
-                <FontAwesomeIcon icon={faFilter} />
-              </MenuButton>
-              <MenuList>
-                <MenuItem onClick={() => setSortBy('Trending')}>
-                  Trending
-                </MenuItem>
-                <MenuItem onClick={() => setSortBy('Latest')}>Latest</MenuItem>
-                <MenuItem onClick={() => setSortBy('Oldest')}>Oldest</MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
-          {sortedPosts.map(post => (
-            <Post post={post} key={post._id} />
-          ))}
-        </Flex>
+    <Box h="full" px={2}>
+      <Box p={2}>
+        <Heading textAlign="center" fontSize={{ base: 'xl', lg: '2xl' }}>
+          Home
+        </Heading>
       </Box>
-    </>
+      <Divider />
+      <Flex flexDir="column" alignItems="center" pb={4} gap={8}>
+        <NewPost />
+        {homePagePosts.length === 0 ? (
+          <Heading fontSize="1.5rem" mt={5}>
+            Start Posting & Following People
+          </Heading>
+        ) : (
+          <Box>
+            <Filter sortBy={sortBy} setSortBy={setSortBy} />
+            {sortedPosts.map(post => (
+              <Post post={post} key={post._id} />
+            ))}
+          </Box>
+        )}
+      </Flex>
+    </Box>
   );
 };
 
