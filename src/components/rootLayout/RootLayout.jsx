@@ -3,7 +3,7 @@ import Header from './Header';
 import Navbar from './Navbar';
 import SideBarRight from './SideBarRight';
 import { Outlet } from 'react-router-dom';
-import { Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import { ScrollToTop } from '../UI/ScrollToTop';
 import { useDispatch } from 'react-redux';
 import { getAllUsers } from '../../slices/userSlice';
@@ -48,18 +48,6 @@ const RootLayout = () => {
         as={'main'}
         area="main"
         overflowY="scroll"
-        css={{
-          '&::-webkit-scrollbar': {
-            width: '2px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: useColorModeValue('#cbd5e0', '#319795'),
-            borderRadius: '2px',
-          },
-          '&::-webkit-scrollbar-track': {
-            backgroundColor: 'transparent',
-          },
-        }}
       >
         <ScrollToTop myRef={scrollRef} />
         <Outlet />

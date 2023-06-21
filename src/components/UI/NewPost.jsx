@@ -14,11 +14,12 @@ import {
   Spacer,
   Textarea,
 } from '@chakra-ui/react';
-import { faFaceSmile, faImage } from '@fortawesome/free-regular-svg-icons';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../../slices/postsSlice';
+import EmojiPopover from './EmojiPopover';
 
 const initialPostData = {
   content: '',
@@ -50,6 +51,10 @@ const NewPost = () => {
 
   const handleImageRemove = () => {
     setPostData(prev => ({ ...prev, mediaURL: '' }));
+  };
+
+  const handleEmojiClick = e => {
+    setPostData(prev => ({ ...prev, content: prev.content + e.emoji }));
   };
 
   return (
@@ -97,7 +102,7 @@ const NewPost = () => {
 
       <CardFooter p={2}>
         <Flex w="full">
-          <Flex alignItems="center" ml={2}>
+          <Flex alignItems="center" ml={2} gap={2}>
             <FormControl display="flex" alignItems="center" width="1rem">
               <FormLabel m={0} cursor="pointer">
                 <FontAwesomeIcon icon={faImage} />
@@ -109,6 +114,7 @@ const NewPost = () => {
                 onChange={handleImageSelect}
               />
             </FormControl>
+            <EmojiPopover onEmojiClick={handleEmojiClick} />
           </Flex>
           <Spacer />
           <Button
