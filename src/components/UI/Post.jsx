@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -15,7 +16,9 @@ import {
   MenuList,
   Spacer,
   Text,
+  Tooltip,
   useDisclosure,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -45,6 +48,7 @@ const Post = ({ post }) => {
   const { bookmarks } = useSelector(store => store.posts);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isMobile] = useMediaQuery('(max-width: 480px)');
 
   const user = users.find(user => user?.username === post?.username);
 
@@ -143,30 +147,40 @@ const Post = ({ post }) => {
 
       <CardFooter p={2}>
         <Flex w="full">
-          <Flex alignItems="center">
-            <IconButton
-              borderRadius="full"
-              icon={
-                <FontAwesomeIcon
-                  icon={isLiked ? faHeartSolid : faHeart}
-                  color={isLiked ? '#E53E3E' : 'null'}
-                />
-              }
-              bg="transparent"
-              onClick={likeDislikeHandler}
-            />
-            {post.likes.likeCount > 0 && <Text>{post.likes.likeCount}</Text>}
-            <IconButton
-              borderRadius="full"
-              icon={
-                <FontAwesomeIcon
-                  icon={isBookmarked ? faBookmarkSolid : faBookmark}
-                  color={isBookmarked ? '#38A169' : 'null'}
-                />
-              }
-              bg="transparent"
-              onClick={addToBookmarksHandler}
-            />
+          <Flex alignItems="center" gap={2} ml={{ base: 2, lg: 4 }}>
+            <Tooltip label="Like" openDelay={600}>
+              <Button
+                p={0}
+                leftIcon={
+                  <FontAwesomeIcon icon={isLiked ? faHeartSolid : faHeart} />
+                }
+                variant="ghost"
+                _hover={!isMobile && { bg: 'transparent', color: '#E53E3E' }}
+                _active={!isMobile && { bg: 'transparent', color: '#E53E3E' }}
+                onClick={likeDislikeHandler}
+                color={isLiked ? '#E53E3E' : ''}
+              >
+                {post.likes.likeCount > 0 ? (
+                  <Text fontWeight="normal">{post.likes.likeCount}</Text>
+                ) : (
+                  <Text></Text>
+                )}
+              </Button>
+            </Tooltip>
+            <Tooltip label="Bookmark" openDelay={600}>
+              <IconButton
+                icon={
+                  <FontAwesomeIcon
+                    icon={isBookmarked ? faBookmarkSolid : faBookmark}
+                  />
+                }
+                variant="ghost"
+                _hover={!isMobile && { bg: 'transparent', color: '#38A169' }}
+                _active={!isMobile && { bg: 'transparent', color: '#38A169' }}
+                onClick={addToBookmarksHandler}
+                color={isBookmarked ? '#38A169' : ''}
+              />
+            </Tooltip>
           </Flex>
           <Spacer />
           <IconButton
