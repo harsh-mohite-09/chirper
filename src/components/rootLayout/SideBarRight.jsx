@@ -36,7 +36,7 @@ const SideBarRight = () => {
         <Text fontSize="xl" fontWeight="bold" mb="4" ml="4">
           Suggested Users
         </Text>
-        {allUsersStatus === 'pending' ? (
+        {allUsersStatus === 'idle' ? (
           <Flex justifyContent="center" mt={5}>
             <Spinner colorScheme="teal" size="lg" />
           </Flex>

@@ -1,35 +1,43 @@
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Heading, Spinner } from '@chakra-ui/react';
 
 import React, { useEffect } from 'react';
 import Post from '../components/UI/Post';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../slices/userSlice';
+import { getAllUsers } from '../slices/userSlice';
 import UserProfile from '../components/user/UserProfile';
 
 const UserProfilePage = () => {
   const { username } = useParams('username');
-  const { allUsers, userDetailsStatus } = useSelector(store => store.user);
+  const { allUsers, allUsersStatus } = useSelector(store => store.user);
   const { allPosts } = useSelector(store => store.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser(username));
+    dispatch(getAllUsers());
   }, [username, dispatch]);
 
   const userPosts = allPosts.filter(post => post.username === username);
   const user = allUsers.find(user => user.username === username);
 
-  return userDetailsStatus === 'pending' ? (
+  return allUsersStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
     </Flex>
   ) : (
     <Flex p={2} flexDir="column" alignItems="center">
       <UserProfile user={user} />
-      {userPosts?.map(post => (
-        <Post user={user} post={post} key={post._id} />
-      ))}
+      {userPosts.length === 0 ? (
+        <Heading fontSize="1.5rem" mt={5}>
+          No Posts Yet
+        </Heading>
+      ) : (
+        <>
+          {userPosts?.map(post => (
+            <Post post={post} key={post._id} />
+          ))}
+        </>
+      )}
     </Flex>
   );
 };

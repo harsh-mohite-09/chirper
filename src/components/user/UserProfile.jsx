@@ -43,7 +43,7 @@ const UserProfile = ({ user }) => {
   };
 
   return (
-    <Flex mt={{ base: 0, lg: 4 }} p={2} w="full" maxW="600px">
+    <Flex mt={{ base: 0, lg: 4 }} p={2} mb={4} w="full" maxW="600px">
       <Flex w="full" flexDir="column" gap={4}>
         <Flex gap={2} w="full">
           <Avatar
