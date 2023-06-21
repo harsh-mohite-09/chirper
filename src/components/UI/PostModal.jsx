@@ -29,7 +29,7 @@ import {
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmile, faImage } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPost, editPost } from '../../slices/postsSlice';
 // import EmojiPicker from 'emoji-picker-react';
 
@@ -40,6 +40,7 @@ const initialPostData = {
 
 const PostModal = ({ isOpen, onClose, postDetails }) => {
   const initialRef = useRef();
+  const { user: authUser } = useSelector(store => store.auth);
   const [postData, setPostData] = useState(postDetails || initialPostData);
   // const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const dispatch = useDispatch();
@@ -90,7 +91,10 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
         <ModalBody p={4}>
           <Flex gap={2} h="10rem">
             <Box w="50px" h="50px">
-              <Avatar />
+              <Avatar
+                src={authUser.avatarUrl}
+                name={`${authUser.firstName} ${authUser.lastName}`}
+              />
             </Box>
             <Box flexGrow={1}>
               <Textarea

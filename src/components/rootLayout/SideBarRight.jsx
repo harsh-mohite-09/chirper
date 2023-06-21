@@ -13,8 +13,8 @@ const SideBarRight = () => {
 
   const userList = allUsers?.filter(
     ({ username }) =>
-      username !== authUser.username &&
-      !authUser.following.some(item => item.username === username)
+      username !== authUser?.username &&
+      !authUser?.following.some(item => item.username === username)
   );
 
   const colorModeValue = useColorModeValue('#cbd5e0', '#319795');
@@ -36,7 +36,7 @@ const SideBarRight = () => {
         <Text fontSize="xl" fontWeight="bold" mb="4" ml="4">
           Suggested Users
         </Text>
-        {allUsersStatus === 'idle' ? (
+        {allUsersStatus === 'pending' ? (
           <Flex justifyContent="center" mt={5}>
             <Spinner colorScheme="teal" size="lg" />
           </Flex>

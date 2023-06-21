@@ -1,13 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Header from './Header';
 import Navbar from './Navbar';
 import SideBarRight from './SideBarRight';
 import { Outlet } from 'react-router-dom';
 import { Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import { ScrollToTop } from '../UI/ScrollToTop';
+import { useDispatch } from 'react-redux';
+import { getAllUsers } from '../../slices/userSlice';
+import { getAllPosts } from '../../slices/postsSlice';
 
 const RootLayout = () => {
   const scrollRef = useRef();
+
+  // Important to fetch the data of new signup user
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllPosts());
+  }, [dispatch]);
 
   return (
     <Grid

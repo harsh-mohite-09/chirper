@@ -9,6 +9,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Image,
   Input,
   Spacer,
   Textarea,
@@ -47,6 +48,10 @@ const NewPost = () => {
     setPostData(prev => ({ ...prev, mediaURL: imageUrl }));
   };
 
+  const handleImageRemove = () => {
+    setPostData(prev => ({ ...prev, mediaURL: '' }));
+  };
+
   return (
     <Card
       borderTop="8px"
@@ -60,7 +65,10 @@ const NewPost = () => {
       <CardBody py={4} px={4}>
         <Flex gap={2}>
           <Box w="50px" h="50px">
-            <Avatar src={authUser.avatarUrl} />
+            <Avatar
+              src={authUser.avatarUrl}
+              name={`${authUser.firstName} ${authUser.lastName}`}
+            />
           </Box>
           <Box flexGrow={1}>
             <Textarea
@@ -71,9 +79,18 @@ const NewPost = () => {
               placeholder="What is happening?"
               value={postData.content}
               onChange={inputHandler}
+              rows={5}
             />
           </Box>
         </Flex>
+        {postData.mediaURL && (
+          <Box w="8rem">
+            <Image src={postData.mediaURL} objectFit="contain" />
+            <Button w="full" size="sm" onClick={handleImageRemove}>
+              Remove
+            </Button>
+          </Box>
+        )}
       </CardBody>
 
       <Divider borderColor="gray.500" />

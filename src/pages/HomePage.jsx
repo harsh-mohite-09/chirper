@@ -14,17 +14,24 @@ import {
 import React from 'react';
 import NewPost from '../components/UI/NewPost';
 import Post from '../components/UI/Post';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { getSortedPosts, sortOptions } from '../utils/helpers';
+import { useEffect } from 'react';
+import { getAllPosts } from '../slices/postsSlice';
 
 const HomePage = () => {
   const { user: authUser } = useSelector(store => store.auth);
   const { allUsers } = useSelector(store => store.user);
-  const { allPosts } = useSelector(store => store.posts);
+  const { allPosts, allPostsStatus } = useSelector(store => store.posts);
+  const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState('Latest');
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
 
   const homePagePosts = allPosts.filter(
     post =>
@@ -36,7 +43,7 @@ const HomePage = () => {
 
   const sortedPosts = getSortedPosts(homePagePosts, sortBy);
 
-  return allPosts.length === 0 ? (
+  return allPostsStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
     </Flex>
