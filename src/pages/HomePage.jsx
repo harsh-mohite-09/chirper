@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSortedPosts } from '../utils/helpers';
