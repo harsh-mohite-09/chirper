@@ -148,7 +148,7 @@ const Post = ({ post }) => {
       <CardFooter p={2}>
         <Flex w="full">
           <Flex alignItems="center" gap={2} ml={{ base: 2, lg: 4 }}>
-            <Tooltip label="Like" openDelay={600}>
+            <Tooltip label="Like" openDelay={600} isDisabled={isMobile}>
               <Button
                 p={0}
                 leftIcon={
@@ -167,7 +167,7 @@ const Post = ({ post }) => {
                 )}
               </Button>
             </Tooltip>
-            <Tooltip label="Bookmark" openDelay={600}>
+            <Tooltip label="Bookmark" openDelay={600} isDisabled={isMobile}>
               <IconButton
                 icon={
                   <FontAwesomeIcon
