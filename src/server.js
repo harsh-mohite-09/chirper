@@ -87,6 +87,13 @@ export function makeServer({ environment = 'development' } = {}) {
         '/users/unfollow/:followUserId/',
         unfollowUserHandler.bind(this)
       );
+      this.passthrough();
+      this.passthrough(
+        'https://api.cloudinary.com/v1_1/dbiyvbal5/image/upload',
+        'https://api.cloudinary.com/v1_1/dbiyvbal5/video/upload',
+        'https://api.cloudinary.com/v1_1/dbiyvbal5/delete_by_token',
+        ['post']
+      );
     },
   });
 }

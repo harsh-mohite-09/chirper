@@ -1,12 +1,6 @@
 import React from 'react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-import {
-  Box,
-  Flex,
-  HStack,
-  Heading,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, HStack, Heading, useColorModeValue } from '@chakra-ui/react';
 import Searchbar from './Searchbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDove } from '@fortawesome/free-solid-svg-icons';

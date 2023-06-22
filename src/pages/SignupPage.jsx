@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const SignupPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loading = useSelector(store => store.auth.loading);
   const token = useSelector(store => store.auth.token);
   // const [showPassword, setShowPassword] = useState(false);
   // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
