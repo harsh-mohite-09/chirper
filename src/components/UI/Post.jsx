@@ -14,7 +14,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Spacer,
   Text,
   Tooltip,
   useDisclosure,
@@ -22,14 +21,11 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons';
-
 import {
   faHeart as faHeartSolid,
   faBookmark as faBookmarkSolid,
-  faShareAlt,
   faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -182,12 +178,6 @@ const Post = ({ post }) => {
               />
             </Tooltip>
           </Flex>
-          <Spacer />
-          <IconButton
-            borderRadius="full"
-            icon={<FontAwesomeIcon icon={faShareAlt} />}
-            bg="transparent"
-          />
         </Flex>
       </CardFooter>
     </Card>

@@ -3,8 +3,12 @@ import React, { useEffect } from 'react';
 import Post from '../components/UI/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts } from '../slices/postsSlice';
+import { getSortedPosts } from '../utils/helpers';
+import Filter from '../components/UI/Filter';
+import { useState } from 'react';
 
 const ExplorePage = () => {
+  const [sortBy, setSortBy] = useState('Latest');
   const { allPosts, allPostsStatus } = useSelector(store => store.posts);
   const { user: authUser } = useSelector(store => store.auth);
 
@@ -18,6 +22,8 @@ const ExplorePage = () => {
     post => post.username !== authUser.username
   );
 
+  const sortedExplorePosts = getSortedPosts(allExplorePosts, sortBy);
+
   return allPostsStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
@@ -30,8 +36,9 @@ const ExplorePage = () => {
         </Heading>
       </Box>
       <Divider />
-      <Flex flexDir="column" alignItems="center" mt={4} pb={4}>
-        {allExplorePosts.map(post => (
+      <Flex flexDir="column" alignItems="center" pb={4}>
+        <Filter sortBy={sortBy} setSortBy={setSortBy} />
+        {sortedExplorePosts.map(post => (
           <Post post={post} key={post._id} />
         ))}
       </Flex>
