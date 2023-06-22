@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../slices/userSlice';
 import UserProfile from '../components/user/UserProfile';
+import { getSortedPosts } from '../utils/helpers';
 
 const UserProfilePage = () => {
   const { username } = useParams('username');
@@ -20,6 +21,8 @@ const UserProfilePage = () => {
   const userPosts = allPosts.filter(post => post.username === username);
   const user = allUsers.find(user => user.username === username);
 
+  const sortedLatestUserPosts = getSortedPosts(userPosts, 'Latest');
+
   return allUsersStatus === 'pending' ? (
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
@@ -33,7 +36,7 @@ const UserProfilePage = () => {
         </Heading>
       ) : (
         <>
-          {userPosts?.map(post => (
+          {sortedLatestUserPosts?.map(post => (
             <Post post={post} key={post._id} />
           ))}
         </>

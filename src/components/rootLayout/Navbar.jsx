@@ -191,10 +191,14 @@ const Navbar = () => {
             }}
           >
             <Flex gap={4} alignItems="center">
-              <Avatar name={`Harsh Mohite`} size={{ base: 'sm', lg: 'md' }} />
+              <Avatar
+                src={user.avatarUrl}
+                name={`${user.firstName} ${user.lastName}`}
+                size="sm"
+              />
               <Flex flexDir="column" display={{ base: 'none', lg: 'block' }}>
-                <Heading size="sm">Harsh Mohite</Heading>
-                <Text fontSize="sm">@harshmohite09</Text>
+                <Heading size="sm">{`${user?.firstName} ${user?.lastName}`}</Heading>
+                <Text fontSize="sm">@{user?.username}</Text>
               </Flex>
             </Flex>
           </ChakraLink>
