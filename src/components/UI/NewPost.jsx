@@ -12,6 +12,7 @@ import {
   Image,
   Input,
   Spacer,
+  Spinner,
   Textarea,
 } from '@chakra-ui/react';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
@@ -20,6 +21,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../../slices/postsSlice';
 import EmojiPopover from './EmojiPopover';
+import { useMedia } from '../../hooks/useMedia';
 
 const initialPostData = {
   content: '',
@@ -29,8 +31,9 @@ const initialPostData = {
 const NewPost = () => {
   const { user: authUser } = useSelector(store => store.auth);
   const [postData, setPostData] = useState(initialPostData);
-  // const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
+  const { uploadMedia } = useMedia();
 
   const btnIsDisabled = postData.content.trim().length === 0;
 
@@ -39,18 +42,19 @@ const NewPost = () => {
     setPostData(initialPostData);
   };
 
-  const inputHandler = e => {
-    setPostData(prev => ({ ...prev, content: e.target.value }));
-  };
-
-  const handleImageSelect = e => {
-    const file = e.target.files[0];
-    const imageUrl = URL.createObjectURL(file);
-    setPostData(prev => ({ ...prev, mediaURL: imageUrl }));
+  const onUploadClick = async e => {
+    setLoader(true);
+    await uploadMedia(e.target.files[0], setPostData);
+    setLoader(false);
+    e.target.value = null;
   };
 
   const handleImageRemove = () => {
     setPostData(prev => ({ ...prev, mediaURL: '' }));
+  };
+
+  const inputHandler = e => {
+    setPostData(prev => ({ ...prev, content: e.target.value }));
   };
 
   const handleEmojiClick = e => {
@@ -88,6 +92,7 @@ const NewPost = () => {
             />
           </Box>
         </Flex>
+        {loader && <Spinner />}
         {postData.mediaURL && (
           <Box w="8rem">
             <Image src={postData.mediaURL} objectFit="contain" />
@@ -111,7 +116,7 @@ const NewPost = () => {
                 type="file"
                 visibility="hidden"
                 accept="image/*, video/*"
-                onChange={handleImageSelect}
+                onChange={onUploadClick}
               />
             </FormControl>
             <EmojiPopover onEmojiClick={handleEmojiClick} />

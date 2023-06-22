@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  useColorMode,
-  useColorModeValue,
-  IconButton,
-  Tooltip,
-} from '@chakra-ui/react';
+import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 export const ColorModeSwitcher = props => {
@@ -13,13 +8,6 @@ export const ColorModeSwitcher = props => {
   const SwitchIcon = useColorModeValue(FaMoon, FaSun);
 
   return (
-    // <Tooltip
-    //   label={`Switch to ${text}`}
-    //   hasArrow
-    //   placement="left"
-    //   openDelay={200}
-    //   fontSize="md"
-    // >
     <IconButton
       size="md"
       fontSize="xl"
@@ -30,6 +18,5 @@ export const ColorModeSwitcher = props => {
       icon={<SwitchIcon />}
       {...props}
     />
-    // </Tooltip>
   );
 };
