@@ -1,68 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<div align="center">
+  <h1>Chirper</h1>
+    <p>Chirper is a Social Media App where you can share posts.</p>
+ </div>
 
-In the project directory, you can run:
+## How to run the app locally?
+```
+$ git clone https://github.com/harsh-mohite-09/chirper.git
+$ cd chirper
+$ npm install
+$ npm start
+```
 
-### `npm start`
+## Screens in this project
+- Authentication (Login, Signup) Pages
+- Profile Page
+- Home Page
+- Explore Page
+- Bookmarks Page
+- Liked Posts Page
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
+- Authentication using JWT along with Login and Signup Pages. All the below features are accessed after login.
+- User can create, edit and delete the post.
+- Image and Emojis can be added to the Post.
+- User can add, edit and delete comment on any post.
+- User can like or unlike any post.
+- User can add or remove post from bookmarks.
+- Home Page where user can see their posts and the posts of friends followed by user.
+- Trending and Latest Feature where user can sort the posts based on maximum likes and by date.
+- Explore Page where all the posts will be visible. 
+- Liked Page where all the posts liked by user will be visble.
+- Bookmarks Page where all the posts bookmarked by user will be visible.
+- User can follow or unfollow other users.
+- Profile Page where user can edit their profile. It contains details like Avatar, Bio and Portfolio URL. User can edit the profile.
+- User can view the profile of other users as well.
+- Search Functionality with search suggestions.
+- Suggestions with Follow Button on all pages.
+- Loader is shown while the posts are fetched.
+- Alerts in the app to notify the users about success/failure operations.
+- Toogle between Light and Dark Themes.
+- All the screens are Responsive.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Tech Stack and Tools
+- React + Redux Toolkit
+- React Router v6
+- Chakra UI
+- Git For Version Control
+- Netlify for Deployment
+- Cloudinary for Image Storage
 
-### `npm test`
+## Live Link
+[Chirper](https://chirper-social.netlify.app/)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
