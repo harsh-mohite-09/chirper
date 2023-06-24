@@ -28,11 +28,10 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
     avatarUrl: user.avatarUrl,
   });
   const dispatch = useDispatch();
-  const submitProfileEdit = async e => {
-    e.preventDefault();
-    await dispatch(editUserDetails({ ...user, ...updatedDetails }));
-    onClose();
-  };
+
+  const detailsChanged = Object.keys(updatedDetails).some(
+    item => updatedDetails[item] !== user[item]
+  );
 
   const inputHandler = (e, inputName) => {
     setUpdatedDetails(prev => ({
@@ -60,6 +59,14 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
     onClose();
   };
 
+  const submitProfileEdit = async e => {
+    e.preventDefault();
+    if (detailsChanged) {
+      await dispatch(editUserDetails({ ...user, ...updatedDetails }));
+    }
+    onClose();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={closeHandler} size="sm" m="2">
       <ModalOverlay />
@@ -72,7 +79,7 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
               <Flex gap={5}>
                 <Flex pos="relative">
                   <Avatar
-                    src={updatedDetails?.avatarUrl || user.avatarUrl}
+                    src={updatedDetails?.avatarUrl}
                     alt="profile-image"
                     size="lg"
                     marginRight="2"
@@ -93,14 +100,14 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
               <FormControl>
                 <FormLabel>Bio</FormLabel>
                 <Input
-                  value={updatedDetails?.bio || user.bio}
+                  value={updatedDetails?.bio}
                   onChange={e => inputHandler(e, 'bio')}
                 />
               </FormControl>
               <FormControl>
                 <FormLabel>Website</FormLabel>
                 <Input
-                  value={updatedDetails?.website || user.website}
+                  value={updatedDetails?.website}
                   onChange={e => inputHandler(e, 'website')}
                 />
               </FormControl>
