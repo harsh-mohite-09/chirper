@@ -34,7 +34,7 @@ const FollowPopover = ({ type, user }) => {
               ))
             ) : (
               <Text textAlign="center" fontSize="0.9rem">
-                No Followers Yet
+                No {type[0].toUpperCase() + type.slice(1)} Yet
               </Text>
             )}
           </Flex>
