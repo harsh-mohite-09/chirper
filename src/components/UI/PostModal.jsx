@@ -72,7 +72,7 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
   };
 
   const cancelPostHandler = () => {
-    setPostData(initialPostData);
+    setPostData(postDetails || initialPostData);
     onClose();
   };
 
