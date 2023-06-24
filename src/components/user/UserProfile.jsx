@@ -17,6 +17,7 @@ import LogoutUser from '../auth/LogoutUser';
 import { useDispatch, useSelector } from 'react-redux';
 import EditProfileModal from './EditProfileModal';
 import { followUser, unfollowUser } from '../../slices/userSlice';
+import FollowPopover from '../UI/FollowPopover';
 
 const UserProfile = ({ user }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -97,9 +98,16 @@ const UserProfile = ({ user }) => {
           </Link>
         </Flex>
         <Divider />
-        <Flex gap={5}>
-          <Flex>{user?.followers?.length} Followers</Flex>
-          <Flex>{user?.following?.length} Following</Flex>
+        <Flex
+          gap={5}
+          justifyContent={{ base: 'space-evenly', lg: 'flex-start' }}
+        >
+          <Flex cursor="pointer">
+            <FollowPopover user={user} type="followers" />
+          </Flex>
+          <Flex cursor="pointer">
+            <FollowPopover user={user} type="following" />
+          </Flex>
         </Flex>
       </Flex>
     </Flex>
