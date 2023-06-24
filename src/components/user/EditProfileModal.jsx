@@ -22,16 +22,20 @@ import { editUserDetails } from '../../slices/authSlice';
 import UserEditMenu from '../UI/UserEditMenu';
 
 const EditProfileModal = ({ isOpen, onClose, user }) => {
-  const [userDetails, setUserDetails] = useState(user);
+  const [updatedDetails, setUpdatedDetails] = useState({
+    bio: user.bio,
+    website: user.website,
+    avatarUrl: user.avatarUrl,
+  });
   const dispatch = useDispatch();
   const submitProfileEdit = async e => {
     e.preventDefault();
-    await dispatch(editUserDetails(userDetails));
+    await dispatch(editUserDetails({ ...user, ...updatedDetails }));
     onClose();
   };
 
   const inputHandler = (e, inputName) => {
-    setUserDetails(prev => ({
+    setUpdatedDetails(prev => ({
       ...prev,
       [inputName]: e.target.value,
     }));
@@ -40,15 +44,24 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
   const handleImageSelect = e => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
-    setUserDetails(prev => ({ ...prev, avatarUrl: imageUrl }));
+    setUpdatedDetails(prev => ({ ...prev, avatarUrl: imageUrl }));
   };
 
   const handleAvatarSelect = e => {
-    setUserDetails(prev => ({ ...prev, avatarUrl: e.target.src }));
+    setUpdatedDetails(prev => ({ ...prev, avatarUrl: e.target.src }));
+  };
+
+  const closeHandler = () => {
+    setUpdatedDetails({
+      bio: user.bio,
+      website: user.website,
+      avatarUrl: user.avatarUrl,
+    });
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="sm" m="2">
+    <Modal isOpen={isOpen} onClose={closeHandler} size="sm" m="2">
       <ModalOverlay />
       <ModalContent w="90%">
         <ModalHeader>Edit Profile</ModalHeader>
@@ -59,7 +72,7 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
               <Flex gap={5}>
                 <Flex pos="relative">
                   <Avatar
-                    src={userDetails?.avatarUrl}
+                    src={updatedDetails?.avatarUrl || user.avatarUrl}
                     alt="profile-image"
                     size="lg"
                     marginRight="2"
@@ -72,22 +85,22 @@ const EditProfileModal = ({ isOpen, onClose, user }) => {
                   </Box>
                 </Flex>
                 <Flex display="flex" flexDir="column" gap={2}>
-                  <Heading size="md">{`${userDetails?.firstName} ${userDetails?.lastName}`}</Heading>
-                  <Text>@{userDetails?.username}</Text>
+                  <Heading size="md">{`${user?.firstName} ${user?.lastName}`}</Heading>
+                  <Text>@{user?.username}</Text>
                 </Flex>
               </Flex>
 
               <FormControl>
                 <FormLabel>Bio</FormLabel>
                 <Input
-                  value={userDetails?.bio}
+                  value={updatedDetails?.bio || user.bio}
                   onChange={e => inputHandler(e, 'bio')}
                 />
               </FormControl>
               <FormControl>
                 <FormLabel>Website</FormLabel>
                 <Input
-                  value={userDetails?.website}
+                  value={updatedDetails?.website || user.website}
                   onChange={e => inputHandler(e, 'website')}
                 />
               </FormControl>
