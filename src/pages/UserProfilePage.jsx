@@ -23,7 +23,7 @@ const UserProfilePage = () => {
 
   const sortedLatestUserPosts = getSortedPosts(userPosts, 'Latest');
 
-  return allUsersStatus === 'pending' ? (
+  return allUsersStatus === 'pending' || allUsersStatus === 'idle' ? (
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
     </Flex>

@@ -10,17 +10,16 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import SideBarUser from './SideBarUser';
 import { useRef } from 'react';
 import { getSearchSuggestions } from '../../utils/helpers';
 import { CloseIcon } from '@chakra-ui/icons';
+import SideBarUser from './SideBarUser';
 
 const Searchbar = () => {
   const [searchText, setSearchText] = useState('');
@@ -38,8 +37,6 @@ const Searchbar = () => {
   );
 
   const searchSuggestionList = getSearchSuggestions(userList, searchText);
-
-  const colorModeValue = useColorModeValue('#cbd5e0', '#319795');
 
   return (
     <Popover
@@ -82,25 +79,7 @@ const Searchbar = () => {
       <PopoverContent maxW={{ base: '15rem', lg: '20rem' }}>
         <PopoverArrow />
         <PopoverBody>
-          <Flex
-            flexDir="column"
-            gap="4"
-            maxH="16rem"
-            overflowY="scroll"
-            p="2"
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '2px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: colorModeValue,
-                borderRadius: '2px',
-              },
-              '&::-webkit-scrollbar-track': {
-                backgroundColor: 'transparent',
-              },
-            }}
-          >
+          <Flex flexDir="column" gap="4" maxH="16rem" overflowY="scroll" p="2">
             {searchSuggestionList.map(user => (
               <SideBarUser key={user._id} user={user} isSearchUser />
             ))}
