@@ -71,11 +71,16 @@ const PostModal = ({ isOpen, onClose, postDetails }) => {
     setPostData(prev => ({ ...prev, content: prev.content + e.emoji }));
   };
 
+  const cancelPostHandler = () => {
+    setPostData(initialPostData);
+    onClose();
+  };
+
   return (
     <Modal
       initialFocusRef={initialRef}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={cancelPostHandler}
       size="xl"
     >
       <ModalOverlay />
