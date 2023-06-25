@@ -44,64 +44,82 @@ const UserProfile = ({ user }) => {
   };
 
   return (
-    <Flex mt={{ base: 0, lg: 4 }} p={2} mb={4} w="full" maxW="600px">
-      <Flex w="full" flexDir="column" gap={4}>
-        <Flex gap={2} w="full">
+    <Flex
+      flexDir="column"
+      mt={{ base: 0, lg: 4 }}
+      p={2}
+      mb={4}
+      w="full"
+      maxW="600px"
+      gap={4}
+    >
+      <Flex flexGrow={1}>
+        <Flex px={{ base: 0, lg: 8 }}>
           <Avatar
             src={user?.avatarUrl}
             name={`${user?.firstName} ${user?.lastName}`}
-            size="lg"
+            size="2xl"
+            display={{ base: 'none', lg: 'block' }}
           />
-          <Flex flexGrow={1}>
-            <Flex justifyContent="space-between" w="full">
-              <Flex flexDir="column" justifyContent="center">
-                <Heading size="md">{`${user?.firstName} ${user?.lastName}`}</Heading>
-                <Text>@{user?.username}</Text>
+        </Flex>
+        <Flex w="full" flexDir="column" gap={4}>
+          <Flex gap={2} w="full">
+            <Avatar
+              src={user?.avatarUrl}
+              name={`${user?.firstName} ${user?.lastName}`}
+              size="lg"
+              display={{ lg: 'none' }}
+            />
+            <Flex flexGrow={1}>
+              <Flex justifyContent="space-between" w="full">
+                <Flex flexDir="column" justifyContent="center">
+                  <Heading size="md">{`${user?.firstName} ${user?.lastName}`}</Heading>
+                  <Text>@{user?.username}</Text>
+                </Flex>
+                {isAuthUser ? (
+                  <HStack>
+                    <Button
+                      display={{ base: 'none', lg: 'block' }}
+                      onClick={onOpen}
+                    >
+                      Edit Profile
+                    </Button>
+                    <EditProfileModal
+                      isOpen={isOpen}
+                      onClose={onClose}
+                      user={authUser}
+                    />
+                    <IconButton
+                      display={{ base: 'block', lg: 'none' }}
+                      icon={<FontAwesomeIcon icon={faPenToSquare} />}
+                      onClick={onOpen}
+                    />
+                    <LogoutUser />
+                  </HStack>
+                ) : (
+                  <HStack>
+                    <Button
+                      onClick={followHandler}
+                      colorScheme={isFollowed ? 'red' : 'teal'}
+                    >
+                      {isFollowed ? 'Unfollow' : 'Follow'}
+                    </Button>
+                  </HStack>
+                )}
               </Flex>
-              {isAuthUser ? (
-                <HStack>
-                  <Button
-                    display={{ base: 'none', lg: 'block' }}
-                    onClick={onOpen}
-                  >
-                    Edit Profile
-                  </Button>
-                  <EditProfileModal
-                    isOpen={isOpen}
-                    onClose={onClose}
-                    user={authUser}
-                  />
-                  <IconButton
-                    display={{ base: 'block', lg: 'none' }}
-                    icon={<FontAwesomeIcon icon={faPenToSquare} />}
-                    onClick={onOpen}
-                  />
-                  <LogoutUser />
-                </HStack>
-              ) : (
-                <HStack>
-                  <Button
-                    onClick={followHandler}
-                    colorScheme={isFollowed ? 'red' : 'teal'}
-                  >
-                    {isFollowed ? 'Unfollow' : 'Follow'}
-                  </Button>
-                </HStack>
-              )}
             </Flex>
           </Flex>
+          <Flex>{user?.bio}</Flex>
+          <Flex>
+            <Link href={user?.website} target="_blank">
+              {user?.website}
+            </Link>
+          </Flex>
         </Flex>
-        <Flex>{user?.bio}</Flex>
-        <Flex>
-          <Link href={user?.website} target="_blank">
-            {user?.website}
-          </Link>
-        </Flex>
+      </Flex>
+      <Flex flexDir="column" gap={4}>
         <Divider />
-        <Flex
-          gap={5}
-          justifyContent={{ base: 'space-evenly', lg: 'flex-start' }}
-        >
+        <Flex gap={5} justifyContent="space-evenly">
           <Flex cursor="pointer">
             <FollowPopover user={user} type="followers" />
           </Flex>
