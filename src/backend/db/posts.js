@@ -483,7 +483,7 @@ const monica = [
   },
   {
     _id: '34',
-    content: `Had a great thanksgiving dinner with my friends. I am the best hostest.`,
+    content: `Had a great thanksgiving dinner with my friends. I am the best hostess.`,
     mediaURL:
       'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687874119/chirper/Posts/Monica/monica-4_anjokb.jpg',
 
