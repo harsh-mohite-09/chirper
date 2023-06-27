@@ -10,7 +10,7 @@ const ross = [
     _id: '2',
     content: 'Ready for thanksgiving dinner.',
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687708681/chirper/Posts/ross-1_bwbbdj.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687708681/chirper/Posts/Ross/ross-1_bwbbdj.jpg',
     likes: {
       likeCount: 10,
       likedBy: [],
@@ -39,7 +39,7 @@ const ross = [
     content:
       'Unagi, is a state of total awareness. Only by acheiving true unagi can you be prepared for any danger that may befall you!',
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687709102/chirper/Posts/ross-2_he3kmf.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687709102/chirper/Posts/Ross/ross-2_he3kmf.jpg',
     likes: {
       likeCount: 7,
       likedBy: [],
@@ -53,7 +53,7 @@ const ross = [
     _id: '13',
     content: 'Found this genuine pterodactyl egg during one of my digs.',
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687709469/chirper/Posts/ross-3_sjkvhc.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687709469/chirper/Posts/Ross/ross-3_sjkvhc.jpg',
     likes: {
       likeCount: 5,
       likedBy: [],
@@ -84,7 +84,7 @@ const joey = [
     _id: '3',
     content: 'Could I be wearing any more clothes?',
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687710321/chirper/Posts/joey-1_rrzhdw.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687710321/chirper/Posts/Joey/joey-1_rrzhdw.jpg',
     likes: {
       likeCount: 15,
       likedBy: [],
@@ -99,7 +99,7 @@ const joey = [
     content:
       "Out on a dinner date with this beautiful lady. I hope she knows that Joey doesn't share food!",
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687710563/chirper/Posts/joey-2_rif3ke.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687710563/chirper/Posts/Joey/joey-2_rif3ke.jpg',
     likes: {
       likeCount: 8,
       likedBy: [],
@@ -113,7 +113,7 @@ const joey = [
     _id: '10',
     content: 'Got this cool bracelet for my best friend Chandler.',
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687711523/chirper/Posts/joey-3_k9bzyg.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687711523/chirper/Posts/Joey/joey-3_k9bzyg.jpg',
     likes: {
       likeCount: 14,
       likedBy: [],
@@ -142,7 +142,7 @@ const joey = [
     content:
       'Cleaning my Porche before taking it out on a ride. Sharing the insights of my equity investments which got me this car with this gentleman',
     mediaURL:
-      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687712668/chirper/Posts/joey-4_lixrlj.jpg',
+      'https://res.cloudinary.com/dbiyvbal5/image/upload/v1687712668/chirper/Posts/Joey/joey-4_lixrlj.jpg',
     likes: {
       likeCount: 12,
       likedBy: [],
