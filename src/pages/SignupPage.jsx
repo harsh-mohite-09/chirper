@@ -9,17 +9,27 @@ import {
   Button,
   HStack,
   Link as ChakraLink,
+  Text,
+  useColorModeValue,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { signupUser } from '../slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { TOAST_CONFIG } from '../utils/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 const SignupPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector(store => store.auth.token);
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const loading = useSelector(store => store.auth.loading);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userConfig, setUserConfig] = useState({
     firstName: '',
     lastName: '',
@@ -28,6 +38,8 @@ const SignupPage = () => {
     password: '',
     confirmPassword: '',
   });
+  const color = useColorModeValue('teal.600', 'teal.200');
+  const btnColor = useColorModeValue('gray.700', 'gray.100');
 
   useEffect(() => {
     if (token) {
@@ -44,7 +56,11 @@ const SignupPage = () => {
 
   const formSubmitHandler = async e => {
     e.preventDefault();
-    dispatch(signupUser(userConfig));
+    if (userConfig.password === userConfig.confirmPassword) {
+      dispatch(signupUser(userConfig));
+    } else {
+      toast.error('Passwords do not match', TOAST_CONFIG);
+    }
   };
 
   return (
@@ -109,38 +125,70 @@ const SignupPage = () => {
               </FormControl>
 
               <FormControl mt={4} isRequired>
-                <Input
-                  type="password"
-                  placeholder="Enter password"
-                  value={userConfig.password}
-                  onChange={e => inputHandler(e, 'password')}
-                />
+                <InputGroup>
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter password"
+                    value={userConfig.password}
+                    onChange={e => inputHandler(e, 'password')}
+                  />
+                  <InputRightElement>
+                    <IconButton
+                      icon={
+                        <FontAwesomeIcon
+                          icon={showPassword ? faEye : faEyeSlash}
+                        />
+                      }
+                      variant="ghost"
+                      _hover={{ bg: 'transparent' }}
+                      onClick={() => setShowPassword(prev => !prev)}
+                    />
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
               <FormControl mt={4} isRequired>
-                <Input
-                  type="password"
-                  placeholder="Confirm password"
-                  value={userConfig.confirmPassword}
-                  onChange={e => inputHandler(e, 'confirmPassword')}
-                />
+                <InputGroup>
+                  <Input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="Confirm password"
+                    value={userConfig.confirmPassword}
+                    onChange={e => inputHandler(e, 'confirmPassword')}
+                  />
+                  <InputRightElement>
+                    <IconButton
+                      icon={
+                        <FontAwesomeIcon
+                          icon={showConfirmPassword ? faEye : faEyeSlash}
+                          color={btnColor}
+                        />
+                      }
+                      variant="ghost"
+                      _hover={{ bg: 'transparent' }}
+                      onClick={() => setShowConfirmPassword(prev => !prev)}
+                    />
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
 
-              <Button type="submit" colorScheme="teal" width="full" mt={4}>
+              <Button
+                type="submit"
+                isLoading={loading}
+                colorScheme="teal"
+                width="full"
+                mt={4}
+              >
                 Sign Up
               </Button>
 
               <HStack justifyContent="center" mt={4}>
-                <Box>
-                  <ChakraLink
-                    as={Link}
-                    to="/login"
-                    _hover={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    Already have an account? Log In
+                <Flex gap={2} alignItems="center">
+                  Already have an account?
+                  <ChakraLink as={Link} to="/login">
+                    <Text fontWeight="bold" color={color}>
+                      Log In
+                    </Text>
                   </ChakraLink>
-                </Box>
+                </Flex>
               </HStack>
             </form>
           </Box>

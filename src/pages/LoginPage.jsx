@@ -10,10 +10,16 @@ import {
   Button,
   HStack,
   Link as ChakraLink,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../slices/authSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { useRef } from 'react';
 
 const testUserConfig = {
   username: 'harshmohite09',
@@ -23,7 +29,9 @@ const testUserConfig = {
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const loading = useSelector(store => store.auth.loading);
+  const [showPassword, setShowPassword] = useState(false);
+  const loading = useSelector(store => store.auth.loading);
+  const btn = useRef('');
 
   const [userConfig, setUserConfig] = useState({
     username: '',
@@ -39,6 +47,7 @@ const LoginPage = () => {
 
   const formSubmitHandler = async e => {
     e.preventDefault();
+    btn.current = 'login';
     await dispatch(loginUser(userConfig));
     navigate('/');
     setUserConfig({
@@ -49,6 +58,7 @@ const LoginPage = () => {
 
   const guestLoginHandler = async e => {
     e.preventDefault();
+    btn.current = 'guest';
     await dispatch(loginUser(testUserConfig));
     navigate('/');
     setUserConfig(testUserConfig);
@@ -89,18 +99,43 @@ const LoginPage = () => {
 
               <FormControl mt={4} isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  value={userConfig.password}
-                  placeholder="Enter your password"
-                  onChange={e => inputHandler(e, 'password')}
-                />
+                <InputGroup>
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    value={userConfig.password}
+                    placeholder="Enter your password"
+                    onChange={e => inputHandler(e, 'password')}
+                  />
+                  <InputRightElement>
+                    <IconButton
+                      icon={
+                        <FontAwesomeIcon
+                          icon={showPassword ? faEye : faEyeSlash}
+                        />
+                      }
+                      variant="ghost"
+                      _hover={{ bg: 'transparent' }}
+                      onClick={() => setShowPassword(prev => !prev)}
+                    />
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
 
-              <Button type="submit" colorScheme="teal" width="full" mt={4}>
+              <Button
+                type="submit"
+                colorScheme="teal"
+                width="full"
+                mt={4}
+                isLoading={loading && btn.current === 'login'}
+              >
                 Log In
               </Button>
-              <Button width="full" mt={4} onClick={guestLoginHandler}>
+              <Button
+                width="full"
+                isLoading={loading && btn.current === 'guest'}
+                mt={4}
+                onClick={guestLoginHandler}
+              >
                 Guest Log In
               </Button>
               <HStack justifyContent="center" mt={4}>
@@ -108,9 +143,7 @@ const LoginPage = () => {
                   <ChakraLink
                     as={Link}
                     to="/signup"
-                    _hover={{
-                      textDecoration: 'none',
-                    }}
+                    _hover={{ textDecoration: 'none' }}
                   >
                     Create New Account
                   </ChakraLink>
