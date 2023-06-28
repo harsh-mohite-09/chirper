@@ -39,7 +39,6 @@ const SignupPage = () => {
     confirmPassword: '',
   });
   const color = useColorModeValue('teal.600', 'teal.200');
-  const btnColor = useColorModeValue('gray.700', 'gray.100');
 
   useEffect(() => {
     if (token) {
@@ -137,6 +136,7 @@ const SignupPage = () => {
                       icon={
                         <FontAwesomeIcon
                           icon={showPassword ? faEye : faEyeSlash}
+                          color="#718096"
                         />
                       }
                       variant="ghost"
@@ -159,7 +159,7 @@ const SignupPage = () => {
                       icon={
                         <FontAwesomeIcon
                           icon={showConfirmPassword ? faEye : faEyeSlash}
-                          color={btnColor}
+                          color="#718096"
                         />
                       }
                       variant="ghost"

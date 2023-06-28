@@ -111,6 +111,7 @@ const LoginPage = () => {
                       icon={
                         <FontAwesomeIcon
                           icon={showPassword ? faEye : faEyeSlash}
+                          color="#718096"
                         />
                       }
                       variant="ghost"
