@@ -204,14 +204,12 @@ const postsSlice = createSlice({
       })
       .addCase(likePost.fulfilled, (state, action) => {
         state.allPosts = action.payload;
-        toast.success('Liked Post', TOAST_CONFIG);
       })
       .addCase(likePost.rejected, (state, action) => {
         state.allPostsError = action.payload;
       })
       .addCase(dislikePost.fulfilled, (state, action) => {
         state.allPosts = action.payload;
-        toast.success('Disliked Post', TOAST_CONFIG);
       })
       .addCase(dislikePost.rejected, (state, action) => {
         state.allPostsError = action.payload;
