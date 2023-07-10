@@ -47,7 +47,7 @@ const HomePage = () => {
             Start Posting & Following People
           </Heading>
         ) : (
-          <Box>
+          <Box w="full" maxW="600px" pb={4}>
             <Filter sortBy={sortBy} setSortBy={setSortBy} />
             {sortedPosts.map(post => (
               <Post post={post} key={post._id} />
