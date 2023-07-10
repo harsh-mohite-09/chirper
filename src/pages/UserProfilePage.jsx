@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../slices/userSlice';
 import UserProfile from '../components/user/UserProfile';
 import { getSortedPosts } from '../utils/helpers';
+import ErrorPage from './ErrorPage';
 
 const UserProfilePage = () => {
   const { username } = useParams('username');
@@ -27,6 +28,8 @@ const UserProfilePage = () => {
     <Flex justifyContent="center" mt={5}>
       <Spinner colorScheme="teal" size="xl" />
     </Flex>
+  ) : !user ? (
+    <ErrorPage />
   ) : (
     <Flex p={2} flexDir="column" alignItems="center">
       <UserProfile user={user} />
