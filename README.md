@@ -2,7 +2,7 @@
 <div align="center">
   <h1>Chirper</h1>
   <p>Chirper is a Social Media App where you can share posts.</p>
-  <a href="https://share.vidyard.com/watch/mrzPFVkofU6VwNonfPM795?](https://www.loom.com/share/842b586935b04584a62eeb328076e796?sid=07c9ab7e-1c4e-49fb-8d54-6b0741523b2f" target='_blank'>
+  <a href="https://www.loom.com/share/842b586935b04584a62eeb328076e796?sid=07c9ab7e-1c4e-49fb-8d54-6b0741523b2f" target='_blank'>
     Watch Video
   </a>
  </div>
